@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+	     name="Anal Probe" basedir="../"
+	     default="package-war">
+
+    <target name="configure">
+        <!-- Where project source files are located -->
+        <property name="src-location" value="src" />
+            
+        <!-- Name of the widget set -->
+        <property name="widgetset" value="org.vaadin.analprobe.widgetset.AnalProbeWidgetSet"/>
+
+        <!-- Compilation result directory -->
+        <property name="result-dir" value="build/result"/>
+        
+        <!-- The target name of the built add-on JAR -->
+        <property name="target-war"
+            value="${result-dir}/analprobe.war"/>
+    </target>
+
+	<!-- Initialize build -->
+    <target name="init" depends="configure">
+        <!-- Construct and check classpath -->
+        <path id="compile.classpath">
+            <!-- Source code to be compiled -->
+            <pathelement path="${src-location}" />
+            
+            <!-- Vaadin libraries and dependencies -->
+            <fileset dir="${result-dir}/lib">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+
+        <mkdir dir="${result-dir}"/>
+    </target>
+
+	<!-- Retrieve dependencies with Ivy -->
+    <target name="resolve" depends="init">
+        <ivy:retrieve
+            pattern="${result-dir}/lib/[module]-[type]-[artifact]-[revision].[ext]"/>
+    </target>
+
+    <!-- Compile server-side -->
+    <target name="compile-server-side"
+            depends="init, resolve">
+        <delete dir="${result-dir}/classes"/>
+        <mkdir dir="${result-dir}/classes"/>
+
+        <javac srcdir="${src-location}"
+               destdir="${result-dir}/classes">
+            <classpath>
+                <path refid="compile.classpath"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Compile server-side -->
+    <target name="compile-client-side"
+            depends="init, resolve">
+        <delete dir="${result-dir}/classes"/>
+        <mkdir dir="${result-dir}/classes"/>
+
+        <javac srcdir="${src-location}"
+               destdir="${result-dir}/classes">
+            <classpath>
+                <path refid="compile.classpath"/>
+            </classpath>
+        </javac>
+    </target>
+
+	<!-- Refresh the project in a locally running Eclipse. -->
+	<target name="refresh-eclipse" if="eclipse.running">
+		<echo>Refreshing project folder</echo>
+		<eclipse.refreshLocal resource="CalendarTest" depth="infinite" />
+	</target>
+
+	<target name="package-war" depends="resolve">
+		<property name="result-path" value="build/result" />
+		<property name="result.classes" value="build/classes" />
+		<property name="app.name" value="analprobe" />
+
+		<war destfile="${result-path}/${app.name}.war" webxml="WebContent/WEB-INF/web.xml">
+			<classes dir="${result.classes}" includes="**" />
+            <lib dir="WebContent/WEB-INF/lib" excludes="*src*" />
+            <lib dir="build/result/lib">
+            	<exclude name="*servlet-api*" />
+            </lib>
+
+			<!-- Include the built widget set and theme. -->
+			<fileset dir="WebContent">
+				<patternset>
+                    <include name="images/**/*" />
+					<include name="VAADIN/widgetsets/**/*" />
+					<include name="VAADIN/themes/**/*" />
+                    <include name="*.html" />
+                    <include name="WEB-INF/*.xml" />
+                    <include name="WEB-INF/classes/META-INF/*.xml" />
+				</patternset>
+			</fileset>
+		</war>
+	</target>
+</project>
