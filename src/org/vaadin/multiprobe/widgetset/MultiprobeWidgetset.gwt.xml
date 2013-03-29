@@ -44,4 +44,6 @@
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
 
     <inherits name="com.github.wolfie.refresher.RefresherWidgetset" />
+
+    
 </module>
