@@ -1,26 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE ivy-module [
-    <!ENTITY vaadin.version "latest.release">
+	<!ENTITY vaadin.version "7.1.9">
 ]>
 <ivy-module version="2.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info organisation="com.vaadin" module="v7proj" />
-    <configurations>
-        <!-- The default configuration, which should be deployed to the server -->
-        <conf name="default" />
-
-        <!-- Production configuration for deploying to production server -->
-        <conf name="production" />
-
-        <!-- A configuration only needed when compiling the widget set. Should 
-            not be deployed to the server -->
-        <conf name="widgetset-compile" />
-    </configurations>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="com.example" module="v7proj" />
+	<configurations>
+		<!-- The default configuration, which should be deployed to the server -->
+		<conf name="default" />
+		<!-- A configuration only needed when compiling the widget set. Should 
+			not be deployed to the server -->
+		<conf name="widgetset-compile" />
+		<!-- A configuration used in compilation of server side classes only.
+			Should be deployed to the server -->
+		<conf name="nodeploy" />
+	</configurations>
     <dependencies>
         <!-- The core server part of Vaadin -->
-        <dependency org="com.vaadin" name="vaadin-server" rev="&vaadin.version;"
-                    conf="default->default" changing="true"/>
+        <dependency org="com.vaadin" name="vaadin-server" rev="&vaadin.version;" changing="true"/>
 
         <!-- Vaadin themes -->
         <dependency org="com.vaadin" name="vaadin-themes" rev="&vaadin.version;"/>
@@ -30,14 +28,17 @@
                     rev="&vaadin.version;"/>
 
         <!-- Vaadin client side, needed for widget set compilation -->
-        <dependency org="com.vaadin" name="vaadin-client" rev="&vaadin.version;"/>
+        <dependency org="com.vaadin" name="vaadin-client"
+                    rev="&vaadin.version;" conf="widgetset-compile->default"/>
 
         <!-- Compiler for custom widget sets. Should not be deployed -->
         <dependency org="com.vaadin" name="vaadin-client-compiler"
                     rev="&vaadin.version;" conf="widgetset-compile->default"/>
 
-        <dependency org="com.vaadin.addon" name="vaadin-charts" rev="1.0.1" conf="default->default" />
+		<dependency org="com.vaadin" name="vaadin-push" rev="&vaadin.version;"/>
+
+        <dependency org="com.vaadin.addon" name="vaadin-charts" rev="1.1.3"/>
         <!-- <dependency org="com.vaadin.addon" name="vaadin-charts" rev="latest.release" conf="default->default"/> -->
-        <!-- <dependency org="org.vaadin.addons" name="refresher" rev="latest.release" conf="default->default" /> -->
+        <!-- <dependency org="org.vaadin.addons" name="refresher" rev="1.2.1.7" conf="default->default" /> -->
     </dependencies>
 </ivy-module>

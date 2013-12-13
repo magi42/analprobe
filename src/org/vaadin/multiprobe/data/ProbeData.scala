@@ -24,7 +24,7 @@ object ProbeData {
 
   {
     val datafile: String = System.getenv("HOME") + "/analprobe.dat"
-    println("Opening data journal " + datafile)
+    // println("Opening data journal " + datafile)
 
     try {
       val reader: FileReader = new FileReader(datafile)
@@ -39,12 +39,15 @@ object ProbeData {
             // Probe events include a date, probe ID, and measurement
             val date: Date = dateFormat.parse(split(0))
             val probeId: Int = Integer.parseInt(split(1))
-            val value: Int = Integer.parseInt(split(2))
+            val value: Double = split(2).toDouble
 
             getOrCreateProbe(probeId).add(new ProbeEntry(date, value), null)
           } catch {
             case e: ParseException =>
               System.err.println("Invalid format '" +
+                e.getMessage() + " in " + line)
+            case e: NumberFormatException =>
+              System.err.println("Invalid number format '" +
                 e.getMessage() + " in " + line)
           }
         } else
@@ -52,7 +55,7 @@ object ProbeData {
       }
 
       in.close()
-      println(readLines + " entries read")
+      // println(readLines + " entries read")
     } catch {
       case e: FileNotFoundException =>
         println("Journal not found, creating one.")
@@ -71,12 +74,8 @@ object ProbeData {
   }
 
   def getOrCreateProbe(probeId: Int): Probe = {
-    if (probes.contains(probeId))
-      probes(probeId)
-    else {
-      val newProbe = new Probe(probes.size)
-      probes.put(newProbe.id, newProbe)
-      newProbe
-    }
+    if (!probes.contains(probeId))
+      probes.put(probeId, new Probe(probeId))
+    probes(probeId)
   }
 }

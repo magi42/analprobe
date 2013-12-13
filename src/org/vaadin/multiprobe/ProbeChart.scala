@@ -28,51 +28,48 @@ import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Button.ClickEvent
 import org.vaadin.multiprobe.data.ProbeData
 import scala.collection.mutable.HashMap
+import org.vaadin.multiprobe.data.ListWindow
 
 class ProbeChart extends CustomComponent {
   var timescale: Int = _
   var windows: HashMap[Int, ProbeWindow] = new HashMap[Int, ProbeWindow]
 
-  class TimeScale(val caption: String, val duration: Int)
-
-  class ListWindow[T](val list: LinkedList[T]) {
-    var first: LinkedList[T] = _
-    var last: LinkedList[T] = _
-  }
+  class TimeScale(val caption: String, val duration: Int) extends Serializable
 
   class ProbeWindow(val probe: Probe) extends ListWindow[ProbeEntry](probe.data) {
     val series: DataSeries = new DataSeries
     var currentValue: DataSeriesItem = _
 
-    def clear = {
-      first = null
-      last = null
+    override def clear = {
+      super.clear
       series.clear()
       println("Cleared window")
     }
 
     /** Forwards the beginning of the time window to the given time */
     def forwardStart(windowStart: Date) {
-      val startSecond: Long = windowStart.getTime();
+      if (!probe.data.isEmpty) {
+        val startSecond: Long = windowStart.getTime();
 
-      if (first == null) {
-        first = probe.data
+        if (first == null) {
+          first = probe.data
 
-        // Forward until we reach the start of the window
-        while (first.tail != null && first.head.time.getTime() > startSecond)
-          if (first.head.time.getTime() <= startSecond) {
-            // System.out.println("Forwarding over " + first.getTime());
-            first = first.tail
-          }
-      }
+          // Forward until we reach the start of the window
+          while (!first.tail.isEmpty && first.head.time.getTime() > startSecond)
+            if (first.head.time.getTime() <= startSecond) {
+              // System.out.println("Forwarding over " + first.getTime());
+              first = first.tail
+            }
+        }
 
-      // Remove old items until we reach current time
-      // System.out.println("Forwarding start time");
-      while (series.size() > 0 && series.get(0).getX().longValue() < startSecond) {
-        val seriesCurrent: DataSeriesItem = series.get(0);
-        // System.out.println("Checking if " + seriesCurrent.getX().longValue() + " >= " + startSecond);
-        series.remove(series.get(0));
-        // System.out.println("Removed an old item from window");
+        // Remove old items until we reach current time
+        // System.out.println("Forwarding start time");
+        while (series.size() > 0 && series.get(0).getX().longValue() < startSecond) {
+          val seriesCurrent: DataSeriesItem = series.get(0);
+          // System.out.println("Checking if " + seriesCurrent.getX().longValue() + " >= " + startSecond);
+          series.remove(series.get(0));
+          // System.out.println("Removed an old item from window");
+        }
       }
     }
 
@@ -87,7 +84,7 @@ class ProbeChart extends CustomComponent {
       val endTime: Long = windowEnd.getTime()
       var added: Boolean = false
       breakable {
-        while (init || last.tail != null) {
+        while (init || !last.tail.isEmpty) {
           if (!init)
             last = last.tail
           init = false
