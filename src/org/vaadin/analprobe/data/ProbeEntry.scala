@@ -1,4 +1,4 @@
-package org.vaadin.multiprobe.data
+package org.vaadin.analprobe.data
 
 import java.io.Writer
 import java.util.Date

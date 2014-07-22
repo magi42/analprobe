@@ -1,4 +1,4 @@
-package org.vaadin.multiprobe.data
+package org.vaadin.analprobe.data
 
 import java.util.Date
 import scala.collection.mutable.LinkedList

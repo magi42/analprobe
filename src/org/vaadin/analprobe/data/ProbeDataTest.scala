@@ -1,4 +1,4 @@
-package org.vaadin.multiprobe.data
+package org.vaadin.analprobe.data
 
 import junit.framework.Assert._
 import junit.framework.TestCase

@@ -1,16 +1,15 @@
-package org.vaadin.multiprobe
+package org.vaadin.analprobe
 
 import javax.servlet.GenericServlet
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
-import org.vaadin.multiprobe.data.ProbeEntry
-import org.vaadin.multiprobe.data.Probe
 import java.util.Date
-import org.vaadin.multiprobe.data.ProbeData
 import scala.util.control.Breaks.break
 import scala.util.control.Breaks.breakable
 import javax.servlet.ServletException
 import java.io.IOException
+import org.vaadin.analprobe.data.ProbeData
+import org.vaadin.analprobe.data.ProbeEntry
 
 class ProbeCollector extends GenericServlet {
   @throws(classOf[ServletException])

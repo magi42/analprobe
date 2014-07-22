@@ -1,34 +1,36 @@
-package org.vaadin.multiprobe
+package org.vaadin.analprobe
 
 import java.util.Date
+
+import scala.collection.mutable.HashMap
 import scala.collection.mutable.LinkedList
 import scala.util.control.Breaks.break
 import scala.util.control.Breaks.breakable
-import org.vaadin.multiprobe.data.Probe
-import org.vaadin.multiprobe.data.ProbeEntry
-import org.vaadin.multiprobe.data.ProbeData
+
+import org.vaadin.analprobe.data.ListWindow
+import org.vaadin.analprobe.data.Probe
+import org.vaadin.analprobe.data.ProbeData
+import org.vaadin.analprobe.data.ProbeEntry
+
 import com.vaadin.addon.charts.Chart
+import com.vaadin.addon.charts.model.AxisType
+import com.vaadin.addon.charts.model.ChartType
 import com.vaadin.addon.charts.model.Configuration
 import com.vaadin.addon.charts.model.DataSeries
 import com.vaadin.addon.charts.model.DataSeriesItem
-import com.vaadin.ui.VerticalLayout
-import com.vaadin.ui.HorizontalLayout
-import com.vaadin.addon.charts.model.PlotOptionsArea
-import com.vaadin.addon.charts.model.AxisType
-import com.vaadin.addon.charts.model.Title
-import com.vaadin.ui.CustomComponent
-import com.vaadin.addon.charts.model.ChartType
 import com.vaadin.addon.charts.model.Marker
-import com.vaadin.data.util.BeanItemContainer
-import com.vaadin.ui.NativeSelect
-import com.vaadin.data.Property.ValueChangeListener
+import com.vaadin.addon.charts.model.PlotOptionsArea
+import com.vaadin.addon.charts.model.Title
 import com.vaadin.data.Property.ValueChangeEvent
+import com.vaadin.data.Property.ValueChangeListener
+import com.vaadin.data.util.BeanItemContainer
 import com.vaadin.ui.Button
-import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Button.ClickEvent
-import org.vaadin.multiprobe.data.ProbeData
-import scala.collection.mutable.HashMap
-import org.vaadin.multiprobe.data.ListWindow
+import com.vaadin.ui.Button.ClickListener
+import com.vaadin.ui.CustomComponent
+import com.vaadin.ui.HorizontalLayout
+import com.vaadin.ui.NativeSelect
+import com.vaadin.ui.VerticalLayout
 
 class ProbeChart extends CustomComponent {
   var timescale: Int = _
@@ -246,7 +248,7 @@ class ProbeChart extends CustomComponent {
   reset.addClickListener(new ClickListener() {
     @Override
     def buttonClick(event: ClickEvent) {
-      setScale(timescale)
+      setScale(timescale);
     }
   });
   controls.addComponent(reset);

@@ -1,8 +1,8 @@
-package org.vaadin.multiprobe.data
+package org.vaadin.analprobe.data
 
 import scala.collection.mutable.LinkedList
 
-class ListWindow[T](val list: LinkedList[T]) {
+class ListWindow[T](val list: LinkedList[T]) extends Serializable {
   var first: LinkedList[T] = _
   var last: LinkedList[T] = _
 
