@@ -1,7 +1,5 @@
-===========================
-analprobe
-Analog Probe Data Collector
-===========================
+analprobe - Analog Probe Data Collector
+=======================================
 
 Copyright 2014 Marko Grönroos (magi@iki.fi)
 
@@ -17,7 +15,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-==================
 3rd Party Licenses
 ==================
 
@@ -26,14 +23,12 @@ licensed under a separate commercial license.
 
 License for Vaadin Charts is required for using this software.
 
-========
 Features
 ========
  - a data collector servlet to receive data over HTTP
  - a Vaadin UI for visualizing the data
  - Written in Scala
 
-===========
 Development
 ===========
  - Install Scala IDE
