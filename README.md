@@ -1,5 +1,5 @@
-analprobe - Analog Probe Data Collector
-=======================================
+Analog Probe Data Collector
+===========================
 
 Copyright 2014 Marko Grönroos (magi@iki.fi)
 
@@ -21,13 +21,27 @@ limitations under the License.
 This application uses Vaadin Charts library, which is a commercial product
 licensed under a separate commercial license.
 
+  https://vaadin.com/add-ons/charts
+
 License for Vaadin Charts is required for using this software.
 
 Features
 ========
- - a data collector servlet to receive data over HTTP
- - a Vaadin UI for visualizing the data
+ - A data collector servlet to receive data over HTTP
+ - A Vaadin UI for visualizing the data
  - Written in Scala
+
+Complete System
+===============
+
+The complete data collection system consists of:
+ - An Arduino board for collecting data from probes
+ - A Raspberry Pi for forwarding the data to a collector
+ - A collector web service
+ - A Vaadin UI for visualizing the data
+
+This project does not currently include the Arduino or Pi code,
+it will be added in future.
 
 Development
 ===========
