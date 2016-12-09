@@ -1,0 +1,13 @@
+#!/bin/bash
+
+while [ 1 ]; do
+	date
+	echo "Connecting with 4444 callback pipe..."
+	ssh -T -R 4444:localhost:22 magi@magi.dy.fi 'sleep 100000'
+	sleep 10
+	date
+	echo "Connecting with 3333 callback pipe..."
+	ssh -T -R 3333:localhost:22 magi@magi.dy.fi 'sleep 100000'
+	sleep 10
+done
+

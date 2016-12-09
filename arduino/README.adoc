@@ -1,0 +1,8 @@
+= Arduino Code
+Marko Grönroos <magi@iki.fi>
+
+The Arduino simply acts as a A/D converter, reading values from one pin and writing them
+to the serial output.
+
+TODO:
+Find the source code and put it here.

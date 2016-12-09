@@ -1,0 +1,31 @@
+= Analog Reader Service
+Marko Grönroos <magi@iki.fi>
+
+The `analreader.py` service should runs on a Raspberry Pi.
+Can be any machine, as long as the serial device is at `/dev/ttyACM*`.
+
+== Configuration
+
+Edit `analreader.py` to configure it.
+
+`COLLECTOR`::
+  Address of the collector service.
+
+`COLLECTORPORT`::
+  Port of the collector service.
+
+`COLLECTORPATH`::
+  URL path of the collector service.
+
+`PROBEID`::
+  Identifier number for the probe.
+
+`SERIALDEV`::
+  Device path for the serial connection to the probe board.
+
+== Debug Connection
+
+The `ssh-forever` script establishes a reverse SSH pipe.
+It uses alternating port number, because there was a problem with stuck ports.
+
+It is pretty hardcoded for my own purposes, but nevertheless it is here.
