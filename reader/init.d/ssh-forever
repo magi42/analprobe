@@ -1,0 +1,48 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          ssh-forever
+# Required-Start:    hostname $local_fs
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: 
+# Description:       
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+. /lib/init/vars.sh
+
+do_start () {
+	su pi - -c "/home/pi/ssh-forever >> /home/pi/ssh-forever.log &"
+}
+do_stop () {
+	pkill ssh-forever
+}
+
+case "$1" in
+  start|"")
+	do_start
+	;;
+  status|reload|force-reload)
+	echo "Error: argument '$1' not supported" >&2
+	exit 3
+	;;
+  stop)
+  	do_stop
+	;;
+  restart)
+	do_start
+	do_stop
+	;;
+  status)
+	do_status
+	exit $?
+	;;
+  *)
+	echo "Usage: motd [start|stop|status]" >&2
+	exit 3
+	;;
+esac
+
+:

@@ -1,8 +1,10 @@
 = Analog Reader Service
 Marko Grönroos <magi@iki.fi>
 
-The `analreader.py` service should runs on a Raspberry Pi.
+The `analreader.py` service is designed to run on a Raspberry Pi.
 Can be any machine, as long as the serial device is at `/dev/ttyACM*`.
+
+It should be configured to start automatically on boot.
 
 == Configuration
 
@@ -23,9 +25,20 @@ Edit `analreader.py` to configure it.
 `SERIALDEV`::
   Device path for the serial connection to the probe board.
 
+== Running
+
+You can just run the `analreader.py` to have it do its thing.
+
+In production use, the reader service can be started as a daemon by init.
+You can install the `init.d/analreader` in `/etc/init.d`.
+Edit the file to see that the path to the `analreader` script is correct.
+It is by default in the home directory of the `pi` user.
+
 == Debug Connection
 
 The `ssh-forever` script establishes a reverse SSH pipe.
-It uses alternating port number, because there was a problem with stuck ports.
+It uses an alternating port number, because there was a problem with stuck ports.
 
 It is pretty hardcoded for my own purposes, but nevertheless it is here.
+
+Again, there is also a `init.d/ssh-forever` init script that you can install in `/etc/init.d` to run it automatically on system boot.
